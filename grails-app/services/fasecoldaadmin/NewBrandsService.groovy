@@ -40,9 +40,18 @@ class NewBrandsService {
 
         Date startTime = new Date();
         
+		//ANTES
+		//"/sites/${siteId}/categories/MCO1744"
+		//DESPUES
+		//https://api.mercadolibre.com/categories/MCO1744
+		
+		
+		
+		System.out.println( "https://api.mercadolibre.com/categories/MCO1744".toString());
+		
         restClient.request( GET, JSON )
         { req ->
-            uri.path = "/sites/${siteId}/categories/MCO1744".toString();
+            uri.path =  "https://api.mercadolibre.com/categories/MCO1744".toString();
 
             response.success =
             { resp, json ->
@@ -62,7 +71,7 @@ class NewBrandsService {
             //log.info( "[${siteId}] DONE Getting dump. Duration: ${TimeCategory.minus( new Date(), startTime )}" );
             
             //log.info( "[${siteId}] Deleting categories" );
-            Brand.executeUpdate( "delete Brand c where c.siteId = :siteId", [siteId : "${siteId}"] );
+         //   Brand.executeUpdate( "delete Brand c where c.siteId = :siteId", [siteId : "${siteId}"] );
             //log.info( "[${siteId}] Categories deleted" );
             
             def brandsToAdd = new ArrayList<Brand>();
