@@ -22,48 +22,19 @@ class NewBrandsService {
 
     public void buildSiteBrands( String siteId )
     {
-        //log.info( "[${siteId}] Building site" );
-
-        //SiteDumpInfo infoAPI = new SiteDumpInfo();
-
-        //log.info( "[${siteId}] Getting HEAD" );
-        //restClient.request( HEAD, JSON )
-        //{ req ->
-         //   uri.path = "/sites/MCO/categories/MCO1744".toString();
-
-            //response.success =
-           // { resp ->
-             //   infoAPI.md5           = resp.headers.'X-Content-MD5';
-              //  infoAPI.lastUpdateDate = dateTimeFormatter.parseDateTime( resp.headers.'X-Content-Created' );
-           // }
-
-           // response.failure =
-           // { resp ->
-             //   log.info( "[${siteId}] ERROR Getting dump HEAD. Status: ${resp.status}. ${resp.data}" );
-           // }
-        //};
-
-        //String cacheKey = "${siteId}_dump_header";
-    
-        //SiteDumpInfo infoCache = attributesCache.get( cacheKey );
-
-      //  if( infoAPI != infoCache )
-        //{
-            //log.info( "[${siteId}] New dump (Old: ${infoCache?.md5}, New: ${infoAPI.md5})" );
+       
             
-            getBrandDump("MCO" ); //siteId
+            getBrandDump(siteId); 
 
-          //  attributesCache.put( cacheKey, infoAPI );
-       // }
-        //else
-        //{
-          //  log.info( "[${siteId}] Same dump." );
-        //}
+
     }
 
     private def getBrandDump( String siteId )
     {
-        log.info( "[${siteId}] Getting dump..." );
+		
+	
+		
+        //log.info( "[${siteId}] Getting dump..." );
         
         def brands;
 
@@ -81,7 +52,9 @@ class NewBrandsService {
             response.failure =
             { resp ->
                 log.info( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
-            }
+            
+				System.out.println( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
+				}
         };
 
         if( brands )
@@ -109,8 +82,8 @@ class NewBrandsService {
         
             startTime = new Date();
             
-            log.info( "[${siteId}] Inserting categories..." );
-            log.info( "[${siteId}] Inserting categories...(0/${brandsToAdd.size()})" );
+            log.info( "[${siteId}] Inserting BRANDS..." );
+            log.info( "[${siteId}] Inserting BRANDS...(0/${brandsToAdd.size()})" );
             for( int i = 0; i < brandsToAdd.size(); i++ )
             {
                 brandsToAdd[i].save();

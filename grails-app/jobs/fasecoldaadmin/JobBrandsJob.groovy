@@ -10,7 +10,7 @@ class JobBrandsJob {
     static triggers =
     {
         simple name           : 'CategoriesDumperJobTrigger',
-               startDelay     : 10000l,         // 10 seconds
+               startDelay     : 1000l,         // 10 seconds
                repeatInterval : ( 60l * 1000l ) // execute job once in 60 seconds
     }
 
@@ -48,9 +48,16 @@ class JobBrandsJob {
 
         for( def site : sites )
         {
-            NewBrandsService.buildSiteBrands( site.id );
+			
+		System.out.println("JOB CORRIENDO");
+
+		
+		//ojo esto anda
+		
+        //   NewBrandsService.buildSiteBrands( "MCO");// site.id 
         }
         
+		System.out.println("JOB fin");
         log.info( "Job end." );
     }
 }
