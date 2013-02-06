@@ -46,6 +46,7 @@ class NewBrandsService {
 		//https://api.mercadolibre.com/categories/MCO1744
 		
 		
+		System.out.println( "dentro del service ********");
 		
 		System.out.println( "https://api.mercadolibre.com/categories/MCO1744".toString());
 		
@@ -74,17 +75,24 @@ class NewBrandsService {
          //   Brand.executeUpdate( "delete Brand c where c.siteId = :siteId", [siteId : "${siteId}"] );
             //log.info( "[${siteId}] Categories deleted" );
             
-            def brandsToAdd = new ArrayList<Brand>();
+			 
+			
+			System.out.println( " IF BRANDS ....");
+            def brandsToAdd = new ArrayList<Brand>(); 
 
-            brands.each
-            { categoryId, brand ->
-                
-                Brand cat       = new Brand();	
-                cat.id             = brand.id;
+		
+			
+            brands.children_categories.each { brand -> 
+				                
+                Brand cat          = new Brand();	
+                cat.categoryId     = brand.id;
                 cat.name           = brand.name;
-                cat.parentCategory = brand.path_from_root.size() > 1 ? brand.path_from_root[brand.path_from_root.size() - 2].id : null;
-                cat.isLeaf         = brand.children_categories.size() == 0;
-                cat.siteId         = brand.id.substring( 0, 3 );
+				cat.site_Id         = brand.id.substring( 0, 3 );
+				
+                //cat.parentCategory = brand.path_from_root.size() > 1 ? brand.path_from_root[brand.path_from_root.size() - 2].id : null;
+               // cat.isLeaf         = brand.children_categories.size() == 0;
+                
+				
                 
                 brandsToAdd.add( cat );
             };
@@ -108,7 +116,7 @@ class NewBrandsService {
                 }
             }
 
-            log.info( "[${siteId}] Categories inserted. Duration: ${TimeCategory.minus( new Date(), startTime )}" );
+           // log.info( "[${siteId}] Categories inserted. Duration: ${TimeCategory.minus( new Date(), startTime )}" );
         }
     }
 }

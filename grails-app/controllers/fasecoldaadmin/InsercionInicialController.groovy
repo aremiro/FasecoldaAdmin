@@ -8,12 +8,7 @@ class InsercionInicialController {
 	
 	def cargaInicial ={
 		System.out.println("Se va a ejecutar la carga inicial en motors DB ........");
-	//	NewBrandsService service = new NewBrandsService();
-	//	service.buildSiteBrands("MCO");
-		
-		
 
-		
 		NewBrandsService.buildSiteBrands( "MCO");// site.id
 		
 	redirect(controller:"insercionInicial", action: "list")

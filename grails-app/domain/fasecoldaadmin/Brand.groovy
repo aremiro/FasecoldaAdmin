@@ -6,8 +6,9 @@ class Brand implements Comparable{
 
 	String categoryId
 	String name
-	int externalId
-	List models
+     boolean     isLeaf
+    String      parentCategory
+	String site_Id
 
 	//static hasMany = [models: Model]
 	static belongsTo = Category
