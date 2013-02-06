@@ -20,6 +20,22 @@ class NewBrandsService {
     def sessionFactory;
     def propertyInstanceMap = org.codehaus.groovy.grails.plugins.DomainClassGrailsPlugin.PROPERTY_INSTANCE_MAP;
 
+	
+	public void mostrarBrands(){
+		
+		
+		def item = Brand.findAll()
+		
+		item.each {  i -> System.out.println( "Marca :" + i.name);
+		
+			
+			}
+		System.out.println("fin del dump !");
+		
+		
+		}
+	
+	
     public void buildSiteBrands( String siteId )
     {
        
@@ -39,11 +55,6 @@ class NewBrandsService {
         def brands;
 
         Date startTime = new Date();
-        
-		//ANTES
-		//"/sites/${siteId}/categories/MCO1744"
-		//DESPUES
-		//https://api.mercadolibre.com/categories/MCO1744
 		
 		
 		System.out.println( "dentro del service ********");
@@ -69,13 +80,7 @@ class NewBrandsService {
 
         if( brands )
         {
-            //log.info( "[${siteId}] DONE Getting dump. Duration: ${TimeCategory.minus( new Date(), startTime )}" );
-            
-            //log.info( "[${siteId}] Deleting categories" );
-         //   Brand.executeUpdate( "delete Brand c where c.siteId = :siteId", [siteId : "${siteId}"] );
-            //log.info( "[${siteId}] Categories deleted" );
-            
-			 
+           
 			
 			System.out.println( " IF BRANDS ....");
             def brandsToAdd = new ArrayList<Brand>(); 
@@ -92,31 +97,15 @@ class NewBrandsService {
                 //cat.parentCategory = brand.path_from_root.size() > 1 ? brand.path_from_root[brand.path_from_root.size() - 2].id : null;
                // cat.isLeaf         = brand.children_categories.size() == 0;
                 
-				
+				cat.save();
                 
-                brandsToAdd.add( cat );
+       
             };
         
-            startTime = new Date();
-            
-            log.info( "[${siteId}] Inserting BRANDS..." );
-            log.info( "[${siteId}] Inserting BRANDS...(0/${brandsToAdd.size()})" );
-            for( int i = 0; i < brandsToAdd.size(); i++ )
-            {
-                brandsToAdd[i].save();
+        
+			System.out.println("fin del dump !");
 
-                if( ( i + 1 ) % 100 == 0 )
-                {
-                    def session = sessionFactory.currentSession;
-                    session.flush();
-                    session.clear();
-                    propertyInstanceMap.get().clear();
-                    
-                    log.info( "[${siteId}] Inserting categories...(${i}/${brandsToAdd.size()})" );
-                }
-            }
-
-           // log.info( "[${siteId}] Categories inserted. Duration: ${TimeCategory.minus( new Date(), startTime )}" );
+			
         }
     }
 }

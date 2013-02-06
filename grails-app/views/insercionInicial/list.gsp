@@ -14,8 +14,19 @@
         </div>
     
       <h1>generar dump</h1>
+         
          <g:form>
                      <g:actionSubmit action="cargaInicial" value="CARGA INICIAL" />
+                     
+                    
+                    
+                     
+                     
          </g:form>
+      <h1>consultar dump</h1>
+     <g:form>
+      <g:actionSubmit action="mostrarBrands" value="Listar brands " />
+      
+     </g:form>
     </body>
 </html>

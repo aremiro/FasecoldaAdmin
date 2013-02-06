@@ -9,14 +9,17 @@ class InsercionInicialController {
 	def cargaInicial ={
 		System.out.println("Se va a ejecutar la carga inicial en motors DB ........");
 
-		NewBrandsService.buildSiteBrands( "MCO");// site.id
+		NewBrandsService.buildSiteBrands("MCO");// site.id
 		
-	redirect(controller:"insercionInicial", action: "list")
-			//render "hola mundo"	
-		
-		// <g:actionSubmit action="cargaInicial" value="CARGA INICIAL" />
+		redirect(controller:"insercionInicial", action: "list")
+			
 		}
 	
+	def mostrarBrands ={
+		System.out.println("Se van a mostrar los brands........");
+		NewBrandsService.mostrarBrands();
+		redirect(controller:"insercionInicial", action: "list")
+		}
 	
 	
 	
