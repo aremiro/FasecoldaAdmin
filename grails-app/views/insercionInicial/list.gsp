@@ -13,20 +13,31 @@
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
     
-      <h1>generar dump</h1>
+      <h1>Generar dump</h1>
          
          <g:form>
-                     <g:actionSubmit action="cargaInicial" value="CARGA INICIAL" />
+                     <g:actionSubmit action="cargaInicial" value="Carga inicial" />
                      
-                    
-                    
-                     
+      
                      
          </g:form>
-      <h1>consultar dump</h1>
+      <h1>Consultar Dump</h1>
      <g:form>
-      <g:actionSubmit action="mostrarBrands" value="Listar brands " />
-      
+      <g:actionSubmit action="mostrarBrands" value="Listar brands " />      
      </g:form>
+   
+      <g:form>
+      <g:actionSubmit action="mostrarBrandsModel" value="Listar brands-model" />
+      </g:form>
+     
+       <g:form>
+      <g:actionSubmit action="mostrarCategory" value="Listar category" />
+      </g:form> 
+     
+      <g:form>
+      <g:actionSubmit action="mostrarCategoryBrand" value="Listar category brand" />
+      </g:form> 
+     
+     
     </body>
 </html>

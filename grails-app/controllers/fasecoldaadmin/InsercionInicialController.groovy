@@ -16,10 +16,41 @@ class InsercionInicialController {
 		}
 	
 	def mostrarBrands ={
-		System.out.println("Se van a mostrar los brands........");
+		System.out.println("mysql> select * from brands;");
 		NewBrandsService.mostrarBrands();
 		redirect(controller:"insercionInicial", action: "list")
 		}
+	
+	
+	
+	def mostrarBrandsModel={
+		System.out.println("mysql> select * from brands-model;");
+		NewBrandsService.mostrarBrandsModel();
+		redirect(controller:"insercionInicial", action: "list")
+		
+		}
+	
+	
+	
+	def mostrarCategory={
+		System.out.println("mysql> select * from category;");
+		NewBrandsService.mostrarCategory();
+		redirect(controller:"insercionInicial", action: "list")
+		
+		}
+	
+	
+	def mostrarCategoryBrand={
+		System.out.println("mysql> select * from category_brand;");
+		NewBrandsService.mostrarCategoryBrand();
+		redirect(controller:"insercionInicial", action: "list")
+		
+		}
+	
+	
+
+	
+	
 	
 	
 	

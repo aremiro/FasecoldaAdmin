@@ -9,9 +9,9 @@ class JobBrandsJob {
    
     static triggers =
     {
-        simple name           : 'CategoriesDumperJobTrigger',
-               startDelay     : 1000l,         // 10 seconds
-               repeatInterval : ( 60l * 1000l ) // execute job once in 60 seconds
+        //simple name           : 'CategoriesDumperJobTrigger',
+               //startDelay     : 1000l,         // 10 seconds
+              // repeatInterval : ( 60l * 1000l ) // execute job once in 60 seconds
     }
 
     def concurrent = false;
