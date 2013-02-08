@@ -15,6 +15,6 @@ class Version implements Serializable {
 		id composite:["versionId","year"]
 	}
 	
-	static belongsTo = Model
+	static belongsTo = BrandModel
 	static hasMany = [pictures:Picture,price:Price]
 }

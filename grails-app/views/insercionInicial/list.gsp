@@ -38,6 +38,11 @@
       <g:actionSubmit action="mostrarCategoryBrand" value="Listar category brand" />
       </g:form> 
      
+      <g:form>
+      <g:actionSubmit action="mostrarModels" value="Listar model" />
+      </g:form> 
+     
+     
      
     </body>
 </html>

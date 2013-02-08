@@ -48,6 +48,14 @@ class InsercionInicialController {
 		}
 	
 	
+	def mostrarModels={
+		System.out.println("mysql> select * from model;");
+		NewBrandsService.mostrarModel();
+		redirect(controller:"insercionInicial", action: "list")
+		
+		}
+	
+	
 
 	
 	

@@ -22,6 +22,31 @@ class NewBrandsService {
 
 	
 	
+	
+	public void mostrarModel(){
+		
+		//category_id          | version | external_id | name  
+		def item = Model.findAll()
+		println("+----------------------------------+")
+		println("| category_id      |    name       |")
+		println("+----------------------------------+")
+		item.each {
+			
+			 i -> println( "  "+ i.category_id  + "                " + i.name );
+			
+			}
+		println("+----------------------------------+")
+		
+		
+		
+		}
+	
+	
+	
+	
+	
+	
+	
 	public void mostrarCategoryBrand(){
 		
 		
@@ -85,7 +110,7 @@ class NewBrandsService {
 	
 	public void mostrarBrandsModel(){
 			
-		def item = Model.findAll()
+		def item = BrandModel.findAll()
 		println("+---------------------------------------+")
 		println("| brand_models_id |         model_id    |")
 		println("+---------------------------------------+")
@@ -124,6 +149,7 @@ class NewBrandsService {
         
         def brands;
 		def models;
+		def allmodels;
 
         Date startTime = new Date();
 		
@@ -187,16 +213,63 @@ class NewBrandsService {
 				
 				models.children_categories.each { model -> 
 				                
-                Model mod          = new Model();	
+                BrandModel mod          = new BrandModel();	
                 mod.categoryId     = model.id;
                 mod.name           = model.name;	
 				mod.brand_model = brand.id;
 				
 				
-				//aca TABLA MODEL
+				println("se crea 1 Brand Model*******" )
+				println(mod.categoryId +" "+ mod.name +" "+ mod.brand_model) //modelo
+				
+				
+				//PARA CADA BRAND MODEL (ID_MODEL) INVOCAR A LA API Y CREAR EL MODEL	
+				//Model model = new Model();
+				
+			/*	restClient.request( GET, JSON )
+				{ req ->
+					uri.path =  "https://api.mercadolibre.com/categories/${mod.brand_model}".toString();
+		
+					response.success =
+					{ resp, json ->
+						allmodels = json;
+					}
+		
+					response.failure =
+					{ resp ->
+						//log.info( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
+					
+						System.out.println( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
+						}
+				};*/
+				
+			//allmodels.children_categories.each { allmodel ->
+				
+				Model m          = new Model();
+				m.category_id     = mod.categoryId;
+				m.name           = mod.name ;
+				
+				
+				println("se crea 1 Model ********" )
+				println(m.category_id +" "+ m.name) //modelo
+			
+		
+			
+				//println("Marca : ${m.name}  ID : ${m.category_id }")
+				//log.info( "Marca : ${m.name}  ID : ${m.category_id }" );
+				
+				
+				if (!(m.save(flush:true)) ){
+					m.errors.each{print it}
+					
+					}
 				
 				
 				
+				//}
+				
+		
+			
 				
 				if (!(mod.save(flush:true)) ){
 					mod.errors.each{print it}
