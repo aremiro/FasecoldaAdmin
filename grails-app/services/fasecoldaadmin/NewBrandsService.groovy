@@ -22,6 +22,24 @@ class NewBrandsService {
 
 	
 	
+	public void mostrarModelsVersion(){
+		
+		//category_id          | version | external_id | name
+		def item = ModelVersion.findAll()
+		println("+-----------------------------------------------------------------------------------------+")
+		println("| model_versions_id      |    version_version_id  |    version_year    !  versions_idx    !")
+		println("+-----------------------------------------------------------------------------------------+")
+		item.each {
+			
+			 i -> println( "    "+ i.model_versions_id  );
+			
+			}
+		println("+-----------------------------------------------------------------------------------------+")
+		
+		
+		
+		}
+	
 	
 	public void mostrarModel(){
 		
@@ -78,7 +96,7 @@ class NewBrandsService {
 			 i -> println( "  "+ i.category_id + "    " + i.version + "     " + i.name);
 			
 			}
-		println("+----------------------------+")
+		println("+-------------------------------------------+")
 		
 		
 		
@@ -223,28 +241,6 @@ class NewBrandsService {
 				println(mod.categoryId +" "+ mod.name +" "+ mod.brand_model) //modelo
 				
 				
-				//PARA CADA BRAND MODEL (ID_MODEL) INVOCAR A LA API Y CREAR EL MODEL	
-				//Model model = new Model();
-				
-			/*	restClient.request( GET, JSON )
-				{ req ->
-					uri.path =  "https://api.mercadolibre.com/categories/${mod.brand_model}".toString();
-		
-					response.success =
-					{ resp, json ->
-						allmodels = json;
-					}
-		
-					response.failure =
-					{ resp ->
-						//log.info( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
-					
-						System.out.println( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
-						}
-				};*/
-				
-			//allmodels.children_categories.each { allmodel ->
-				
 				Model m          = new Model();
 				m.category_id     = mod.categoryId;
 				m.name           = mod.name ;
@@ -253,10 +249,15 @@ class NewBrandsService {
 				println("se crea 1 Model ********" )
 				println(m.category_id +" "+ m.name) //modelo
 			
-		
+				
+				ModelVersion mv = new ModelVersion();
+				mv.model_versions_id =mod.categoryId;
 			
-				//println("Marca : ${m.name}  ID : ${m.category_id }")
-				//log.info( "Marca : ${m.name}  ID : ${m.category_id }" );
+				if (!(mv.save(flush:true)) ){
+					mv.errors.each{print it}
+					
+					}
+				
 				
 				
 				if (!(m.save(flush:true)) ){

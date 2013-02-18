@@ -42,6 +42,11 @@
       <g:actionSubmit action="mostrarModels" value="Listar model" />
       </g:form> 
      
+        <g:form>
+      <g:actionSubmit action="mostrarModelsVersion" value="Models Version" />
+      </g:form> 
+     
+     
      
      
     </body>

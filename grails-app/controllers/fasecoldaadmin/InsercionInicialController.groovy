@@ -55,6 +55,13 @@ class InsercionInicialController {
 		
 		}
 	
+	def mostrarModelsVersion={
+		System.out.println("mysql> select * from model_version;");
+		NewBrandsService.mostrarModelsVersion();
+		redirect(controller:"insercionInicial", action: "list")
+		
+		}
+	
 	
 
 	
