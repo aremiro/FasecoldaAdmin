@@ -60,11 +60,6 @@ class NewBrandsService {
 		}
 	
 	
-	
-	
-	
-	
-	
 	public void mostrarCategoryBrand(){
 		
 		
@@ -157,9 +152,9 @@ class NewBrandsService {
         //log.info( "[${siteId}] Getting dump..." );
 		
 		Category category = new Category();
-		category.category_id = "MCO1744";
+		category.category_id = "MLV1744";
 	    category.version = "1";
-		category.name = "Carros, Camionetas y Camperos";
+		category.name = "Carros y Camionetas";
 		
 		category.save(flush:true);
 	
@@ -174,11 +169,11 @@ class NewBrandsService {
 		
 		System.out.println( "********Dentro del service ********");	
 		System.out.println( "tomando el dump de marcas.....");
-		System.out.println( "https://api.mercadolibre.com/categories/MCO1744".toString());
-		
+		System.out.println( "https://api.mercadolibre.com/categories/MLV1744".toString());
+		println("inicio del script *.sql");
         restClient.request( GET, JSON )
         { req ->
-            uri.path =  "https://api.mercadolibre.com/categories/MCO1744".toString();
+            uri.path =  "https://api.mercadolibre.com/categories/MLV1744".toString();
 
             response.success =
             { resp, json ->
@@ -195,7 +190,7 @@ class NewBrandsService {
 
         if( brands ){
            
-			
+			int indice =0;
             brands.children_categories.each { brand -> 
 				                
                 Brand cat          = new Brand();	
@@ -203,13 +198,24 @@ class NewBrandsService {
                 cat.name           = brand.name;	
 				
 				
+				//INSERT BRAND
+				//String insert= "INSERT INTO brand (category_id ,version,external_id,name) VALUES (\"${cat.categoryId}\" ,0,0,\"${cat.name}\" );";
+				//println(insert);
+				
+				
+				
 				CategoryBrand cb = new CategoryBrand();
-				cb.category_brands_id= "MCO1744";
+				cb.category_brands_id= "MLV1744";
 				cb.brand_id = brand.id;
 				
 				
-				System.out.println( "tomando el dump de modelos para la categoria: "+ cat.categoryId + " "+cat.name );
-				System.out.println( "https://api.mercadolibre.com/categories/${cat.categoryId}".toString());
+				//INSERT BRAND
+				//String insert= "INSERT INTO category_brand (category_brands_id ,brand_id, brands_idx) VALUES (\"MLV1744\",\"${cb.brand_id}\" " +","+ indice+   ");";
+				//println(insert);
+			//	indice++;
+				
+				//System.out.println( "tomando el dump de modelos para la categoria: "+ cat.categoryId + " "+cat.name );
+				//System.out.println( "https://api.mercadolibre.com/categories/${cat.categoryId}".toString());
 				
 				
 				restClient.request( GET, JSON )
@@ -237,21 +243,45 @@ class NewBrandsService {
 				mod.brand_model = brand.id;
 				
 				
-				println("se crea 1 Brand Model*******" )
-				println(mod.categoryId +" "+ mod.name +" "+ mod.brand_model) //modelo
+				//INSERT BRAND
+				//String insert= "INSERT INTO brand_model (brand_models_id,model_id) VALUES (\"${mod.brand_model}\",\"${mod.categoryId}\");";
+				//println(insert);
+				
+				
+				
+				//SCRIPT DE INSERT
+				//| category_id  | version | external_id | name |
+				
+				
+				
+				//println("se crea 1 Brand Model*******" )
+			//	println(mod.categoryId +" "+ mod.name +" "+ mod.brand_model) //modelo
 				
 				
 				Model m          = new Model();
 				m.category_id     = mod.categoryId;
 				m.name           = mod.name ;
 				
+				//String insert2= "INSERT INTO model (category_id ,version,external_id,name) VALUES (\"${mod.categoryId}\" ,0,0,\"${mod.name}\" );";
+				//println(insert2);
 				
-				println("se crea 1 Model ********" )
-				println(m.category_id +" "+ m.name) //modelo
+				//println("se crea 1 Model ********" )
+				//println(m.category_id +" "+ m.name) //modelo
 			
 				
 				ModelVersion mv = new ModelVersion();
 				mv.model_versions_id =mod.categoryId;
+				
+				//setVersion(mod.categoryId)
+			    //setVersiontable(mod.categoryId)
+				
+				
+				
+				
+				//insert2= "INSERT INTO model (category_id ,version,external_id,name) VALUES (\"${mod.categoryId}\" ,0,0,\"${mod.name}\" );";
+				//println(insert2);
+				
+				
 			
 				if (!(mv.save(flush:true)) ){
 					mv.errors.each{print it}
@@ -307,4 +337,213 @@ class NewBrandsService {
 			
         }
     }
+	
+	
+	
+	/**
+	 * @author nicolas moraes
+	 * @description insertVersionModel genera un script para insertar en la tabla version_model, 
+	 * en la base de datos Motors.
+	 * @param modelId
+	 * 
+	 */
+	private def insertVersionModel( String modelId ){
+	def models;
+	int cont=0;
+		restClient.request( GET, JSON )
+		{ req ->
+			uri.path =  "https://api.mercadolibre.com/categories/${modelId}/attributes".toString();
+
+			response.success =
+			{ resp, json ->
+				models = json;
+			}
+
+			response.failure =
+			{ resp ->
+				System.out.println( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
+				}
+		};
+	
+	def atributo= models.find{ it.name=="Versión"}
+	
+	if(atributo){
+	atributo.values.each{
+		
+		String insert2= "INSERT INTO model_version (model_versions_id ,version_version_id ,version_year, versions_idx) VALUES (\"${modelId}\" ,\"${it.id}\",null,\"${cont}\" );";
+		println(insert2);
+		cont ++;		
+		}
+	}
+			
+		
+	}
+	
+	/**
+	 * @author nicolas moraes
+	 * @description insertVersion genera un script para insertar en la tabla version, 
+	 * en la base de datos Motors.
+	 * @param modelId
+	 * 
+	 */
+	private def insertVersion( String modelId ){
+		def models;
+
+	int cont=0;
+		restClient.request( GET, JSON )
+		{ req ->
+			uri.path =  "https://api.mercadolibre.com/categories/${modelId}/attributes".toString();
+
+			response.success =
+			{ resp, json ->
+				models = json;
+			}
+
+			response.failure =
+			{ resp ->
+			
+				System.out.println( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
+				}
+		};
+	
+	def atributo= models.find{ it.name=="Versión"}
+	
+	if(atributo){
+	atributo.values.each{
+		
+		for (int i=1960; i<=2012; i++){	
+			String versionIdYear = it.id;
+			String version_id =versionIdYear + "-"+ i.toString();
+			String insert2= "INSERT INTO version (version_id, year,version,name ) VALUES (\"${version_id}\" ,\"${i}\",1,\"${it.id}\" );";
+			println(insert2);
+		
+		
+		}
+		
+		
+		}
+	}
+			
+		
+	}
+	
+	
+	
+	
+	
+	
+	/*
+	public void generateModelVersion(){
+		
+		Category category = new Category();
+		category.category_id = "MLV1744";
+		category.version = "1";
+		category.name = "Carros y Camionetas";
+		
+		category.save(flush:true);
+	
+		//def category_brands_id = category.findByCategory_id();
+		
+		def brands;
+		def models;
+		def allmodels;
+
+		Date startTime = new Date();
+		
+		
+		System.out.println( "********Se va a generar model_service********");
+		System.out.println( "tomando el dump de marcas.....");
+		System.out.println( "https://api.mercadolibre.com/categories/MLV1744".toString());
+		println("inicio del script *.sql");
+		restClient.request( GET, JSON )
+		{ req ->
+			uri.path =  "https://api.mercadolibre.com/categories/MLV1744".toString();
+
+			response.success =
+			{ resp, json ->
+				brands = json;
+			}
+
+			response.failure =
+			{ resp ->
+				log.info( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
+			
+				System.out.println( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
+				}
+		};
+
+		if( brands ){
+		   
+			int indice =0;
+			brands.children_categories.each { brand ->
+								
+				Brand cat          = new Brand();
+				cat.categoryId     = brand.id;
+				cat.name           = brand.name;
+				
+				
+				restClient.request( GET, JSON )
+				{ req ->
+					uri.path =  "https://api.mercadolibre.com/categories/${cat.categoryId}".toString();
+		
+					response.success =
+					{ resp, json ->
+						models = json;
+					}
+		
+					response.failure =
+					{ resp ->
+						//log.info( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
+					
+						System.out.println( "[${siteId}] ERROR Getting dump. Status: ${resp.status}. ${resp.data}" );
+						}
+				};
+				
+				models.children_categories.each { model ->
+								
+				BrandModel mod          = new BrandModel();
+				mod.categoryId     = model.id;
+				mod.name           = model.name;
+				mod.brand_model = brand.id;
+				
+				
+				Model m          = new Model();
+				m.category_id     = mod.categoryId;
+				m.name           = mod.name ;
+				
+				
+				setVersion(mod.categoryId)
+							
+				
+				}
+				
+				
+	
+	
+	   
+			};
+		
+		
+		
+		
+		
+			System.out.println("Fin del dump !");
+
+			
+		}
+		
+		
+		
+		
+		
+		
+		}
+	
+	
+	*/
+	
+	
+	
+	
 }
+
