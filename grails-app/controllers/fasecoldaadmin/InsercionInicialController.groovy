@@ -2,6 +2,10 @@ package fasecoldaadmin
 
 class InsercionInicialController {
 	
+	
+	private final String siteId='MCO';
+	
+	
 	def NewBrandsService;
 	
 	
@@ -9,7 +13,7 @@ class InsercionInicialController {
 	def cargaInicial ={
 		System.out.println("Se va a ejecutar la carga inicial en motors DB ........");
 
-		NewBrandsService.buildSiteBrands("MCO");// site.id
+		NewBrandsService.buildSiteBrands(siteId);
 		
 		redirect(controller:"insercionInicial", action: "list")
 			
@@ -61,13 +65,6 @@ class InsercionInicialController {
 		redirect(controller:"insercionInicial", action: "list")
 		
 		}
-	
-	
-
-	
-	
-	
-	
 	
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
