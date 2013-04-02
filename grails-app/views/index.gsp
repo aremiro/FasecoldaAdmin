@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Fasecolda Administrador</title>
+        <title>Script generator for DB MOTORS</title>
         <meta name="layout" content="main" />
         <style type="text/css" media="screen">
 
@@ -81,10 +81,49 @@
             </div>
         </div>
         <div id="pageBody">
-            <h1>fasecolda administrador</h1>
-            <p>Bienvenido al administrador de fasecolda. Este administrador toma un archivo proveniente de facecolda en formato
-            *.CSV y lo ingresa al administrador, para poder ser insertado posteriormente en la API de mercadolibre.</p>
-
+            <h1>FASECOLDA/INMA Administrador</h1>
+            <p>Bienvenido al administrador para proceso de datos para posterior insercion en la BD mysql MOTORS.
+            Esta apliacion contiene 3 controladores, que se detallan a continuacion:
+            </p>
+           
+           <h2>ImportarController</h2>
+            <p>
+             Este controlador toma un archivo proveniente de FACECOLDA en formato
+             *.CSV (contiene marcas, modelos y precios)y lo ingresa al administrador, para poder tratar sus datos y 
+             posteriormente poder insertarlos en la BD Motors.
+            </p>
+			
+			  <h2>InsercionInicialController</h2>
+            <p>
+             Muestra en pantalla el archivo *.csv cargado 
+            </p>
+			
+		    <h2>InsercionInicialController (generador de script de insercion en BD MOTORS)</h2>
+            <p>
+             Este controlador contiene 2 partes, generar un dump localmente a partir de la API de mercadolibre, simulando
+             la base de datos de motors, el cual luego de generado el dump, se podran hacer listados de las 
+             tablas simuladas, esos listados son en la consola del IDE, por lo tanto se debe de correr la app
+             desde el IDE. </p>
+             <BR>
+             <p>
+             Si queremos generar los insert (ej: INSERT INTO BRANDS .......), debemos entrar al codigo del servicio
+             "NewBrandsService" y descomentar el println comentado (//String insert= "INSERT INTO brand (category_id.... ), y oprimir el boton generar dump, entonces a medida que se genrera el dump
+             empieza a listar por la consola el insert correspondiente. Una vez finalizado, 
+             se comenta el anterior y se descomentan los siguientes, y se oprime de nuevo generar dump, asi sucesivamente.
+             <BR><BR>
+             Antes de eso necesitamos setear que site le vamos a "pegar" (MCO, MLV..)
+             Para eso necesitmos entrar en el codigo del controlador (InsercionInicialController) y modificar:
+	         <BR><BR>
+	         private final String siteId={poner el site que corresponda: MCO, MLV, etc...};
+	         ej: private final String siteId="MLV";
+	         
+             <BR>
+             <BR>
+             Luego que generamos el script, se copia de la consola, y se guarda en un archivo .sql, luego de eso podemos ejecutarlo en la base de datos
+       
+            </p>
+	
+			
             <div id="controllerList" class="dialog">
                 <h2>Controladores disponibles:</h2>
                 <ul>
