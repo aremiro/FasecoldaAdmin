@@ -14,6 +14,7 @@ class FilaCSVController {
 		
         params.max = Math.min(params.max ? params.int('max') : 100, 100)
         [filaCSVInstanceList: FilaCSV.list(params), filaCSVInstanceTotal: FilaCSV.count()]
+		
     }
 
     def create = {
@@ -38,10 +39,12 @@ class FilaCSVController {
         if (!filaCSVInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'filaCSV.label', default: 'FilaCSV'), params.id])}"
             redirect(action: "list")
+		
         }
         else {
             [filaCSVInstance: filaCSVInstance]
-        }
+        
+			}
     }
 
     def edit = {

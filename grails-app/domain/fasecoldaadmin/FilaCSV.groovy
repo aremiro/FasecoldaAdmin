@@ -74,7 +74,9 @@ class FilaCSV {
 	String Um
 	String PesoCategoria
 	
+	//def lista = new ArrayList();
 	
+	Map<Integer,String> mapa = new HashMap<Integer,String>();
 	
 	
     static constraints = {

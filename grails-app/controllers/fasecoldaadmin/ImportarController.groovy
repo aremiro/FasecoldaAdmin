@@ -11,11 +11,41 @@ class ImportarController {
 
 	
 	
+	def insertarPrice ={
+		
+		
+
+	
+		
+	
+				for(FilaCSV model in FilaCSV.findAll()){
+					
+					for (int year in model.mapa.keySet()){
+						def amount = model.mapa.get(year);
+						
+						//println (model.lista[i]);
+						println("insert into price(version,amount,cur_name, cur_symbol)VALUES(1,"+ year+ "-" + amount + ", "+model.Marca);
+
+					}
+
+		
+		}
+					
+	
+		
+	
+		}
+		
+		
+	
+	
+	
+	
 	def loadData={
 		
 		
 		//"/Users/nicolasmoraes/Desktop/Autoplaza/GuiaPrueba.csv"
-		File reader = new File("/Users/nicolasmoraes/Desktop/Autoplaza/GuiaPrueba.csv")
+		File reader = new File("/Users/nicolasmoraes/Desktop/Autoplaza/Guia_CSV_197.csv")
 		
 		boolean primeraIteracion= true
 		
@@ -35,7 +65,12 @@ class ImportarController {
 			importar.Peso=line[8].encodeAsComillas()
 			importar.IdServicio=line[9].encodeAsComillas()
 			importar.Servicio=line[10].encodeAsComillas()
+			
+			
 			importar._1970=line[11].encodeAsComillas()
+			
+			
+			
 			importar._1971=line[12].encodeAsComillas()
 			importar._1972=line[13].encodeAsComillas()
 			importar._1973=line[14].encodeAsComillas()
@@ -96,6 +131,21 @@ class ImportarController {
 			importar.Um=line[69].encodeAsComillas()
 			importar.PesoCategoria=line[70].encodeAsComillas()
 			
+			//_1970
+			
+	
+			 int year =1970
+				for(int i= 11; i<=54; i++){
+
+					if(!line[i].equals("0")){
+						
+						String s = year.toString();
+						importar.mapa.put(s,line[i]);
+			
+					}
+				year++
+			}
+
 			if(primeraIteracion==true){
 				primeraIteracion=false
 			}
@@ -104,10 +154,15 @@ class ImportarController {
 				}
 			
 			
+	
+			
+			
 		}
 
 		redirect(controller:"filaCSV", action: "list")
 			//render "hola mundo"	
+		
+	insertarPrice();
 		}
 	
 	
